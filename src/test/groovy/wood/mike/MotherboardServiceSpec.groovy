@@ -35,11 +35,12 @@ class MotherboardServiceSpec extends Specification implements ServiceUnitTest<Mo
     void "test all with two test data build"() {
         given:
             Motherboard.build()   // works fine first time but would fail if did it again due to unique constraints on brand and model on all components
-            def cpu = Cpu.build(brand: 'Intel', model: 'IN123')
+
+            def cpu = Cpu.build(brand: 'Intel', model: 'IN123')     // so we build the individual components
             def hd = HardDrive.build(brand: 'Seagate', model: 'SG123')
             def gc = GraphicsCard.build(brand: 'ASROCK', model: 'AS123')
             def ra = Ram.build(brand: 'Corsair', model: 'CO123')
-            Motherboard.build( brand: 'MSI', model: 'jjajdkfajdsiaj', cpu: cpu, hardDrives: [hd], graphicsCard: gc, memory: [ra])
+            Motherboard.build( brand: 'MSI', model: 'jjajdkfajdsiaj', cpu: cpu, hardDrives: [hd], graphicsCard: gc, memory: [ra]) // and add to 2nd mobo
         when:
             def allMobos = service.all()
         then:
